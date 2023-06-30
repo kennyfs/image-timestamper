@@ -1,6 +1,8 @@
 import os
 from PIL import Image, ImageDraw, ImageFont
 from PIL.ExifTags import TAGS
+from tkinter import Tk
+from tkinter.filedialog import askopenfilenames
 
 # Function to retrieve EXIF data from an image file
 def get_exif_data(image_path):
@@ -38,9 +40,6 @@ def add_timestamp(image_path, output_path, exif):
     image.save(output_path)
 
     print("Timestamp added to the image.")
-
-from tkinter import Tk     # from tkinter import Tk for Python 3.x
-from tkinter.filedialog import askopenfilenames
 
 Tk().withdraw() # we don't want a full GUI, so keep the root window from appearing
 filenames = askopenfilenames(defaultextension=".jpg .jpeg .png") # show an "Open" dialog box and return the path to the selected file
