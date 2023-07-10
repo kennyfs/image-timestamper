@@ -4,6 +4,7 @@ from PIL.ExifTags import TAGS
 from tkinter import Tk
 from tkinter.filedialog import askopenfilenames
 
+
 # Function to retrieve EXIF data from an image file
 def get_exif_data(image_path):
     image = Image.open(image_path)
@@ -15,18 +16,19 @@ def get_exif_data(image_path):
             exif_data[tag_name] = value
     return exif_data
 
+
 # Function to add a date and time stamp to the image
 def add_timestamp(image_path, output_path, exif):
     image = Image.open(image_path)
     draw = ImageDraw.Draw(image)
     width, height = image.size
 
-    date_time = exif['DateTime']
-    date_time = date_time.replace(':', '-', 2)  # Replace first colon with comma
+    date_time = exif["DateTime"]
+    date_time = date_time.replace(":", "-", 2)  # Replace first colon with comma
 
-    fontsize = width//25
+    fontsize = width // 25
     # Define the font and size for the timestamp
-    font = ImageFont.truetype("Pillow/Tests/fonts/DejaVuSans.ttf", fontsize)
+    font = ImageFont.truetype("DejaVuSans.ttf", fontsize)
     left, top, right, bottom = font.getmask(date_time).getbbox()
     print(left, top, right, bottom)
     # Define the position and color of the timestamp text
@@ -41,15 +43,18 @@ def add_timestamp(image_path, output_path, exif):
 
     print("Timestamp added to the image.")
 
-Tk().withdraw() # we don't want a full GUI, so keep the root window from appearing
-filenames = askopenfilenames(defaultextension=".jpg .jpeg .png") # show an "Open" dialog box and return the path to the selected file
+
+Tk().withdraw()  # we don't want a full GUI, so keep the root window from appearing
+filenames = askopenfilenames(
+    defaultextension=".jpg .jpeg .png"
+)  # show an "Open" dialog box and return the path to the selected file
 
 for filename in filenames:
     # Retrieve and display the EXIF data
     exif_data = get_exif_data(filename)
 
     # Ask user for a save filename
-    output_path = os.path.splitext(filename)[0]+'-timestamped.jpg'
+    output_path = os.path.splitext(filename)[0] + "-timestamped.jpg"
 
     # Add a timestamp to the image and save it
     add_timestamp(filename, output_path, exif_data)
